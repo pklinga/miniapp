@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+
+  proxy:
+    build: ./proxy
+    ports:
+      - 8080:8080
+      - 8081:8081
+    networks:
+      - pm-buli-network
+
+  frontend:
+    image: nginx:1.23.0-alpine
+    volumes:
+      - "./frontend:/usr/share/nginx/html:ro"
+    networks:
+      - pm-buli-network
+    scale: 3
+
+  backend:
+    build: ./server
+    networks:
+      - pm-buli-network
+    volumes:
+      - "./server/db.json:/db.json:rw"
+
+networks:
+  pm-buli-network:
