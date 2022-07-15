@@ -27,3 +27,8 @@ services:
 
 networks:
   pm-buli-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.239.0/24
