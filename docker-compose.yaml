@@ -10,13 +10,26 @@ services:
     networks:
       - pm-buli-network
 
-  frontend:
+  frontend1:
     image: nginx:1.23.0-alpine
     volumes:
       - "./frontend:/usr/share/nginx/html:ro"
     networks:
       - pm-buli-network
-    scale: 3
+
+  frontend2:
+    image: nginx:1.23.0-alpine
+    volumes:
+      - "./frontend:/usr/share/nginx/html:ro"
+    networks:
+      - pm-buli-network
+
+  frontend3:
+    image: nginx:1.23.0-alpine
+    volumes:
+      - "./frontend:/usr/share/nginx/html:ro"
+    networks:
+      - pm-buli-network
 
   backend:
     build: ./server
@@ -27,8 +40,9 @@ services:
 
 networks:
   pm-buli-network:
-    driver: bridge
+
     ipam:
       driver: default
       config:
-        - subnet: 192.168.239.0/24
+        - subnet: "192.168.239.0/24"
+          gateway: "192.168.239.1"
